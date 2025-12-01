@@ -1,25 +1,16 @@
 <template>
   <div id="app">
-    <Test/>
-    <Test2/>
-    <TestCls/>
     <DynamicInput/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Test from "@/test/Test";
-import Test2 from "@/test/Test2";
-import TestCls from "@/test/TestCls";
-import DynamicInput from "@/origin/DynamicInput";
+import DynamicInput from "../dist/index.common";
 
 @Component({
   components: {
     DynamicInput,
-    TestCls,
-    Test2,
-    Test
     // HelloWorld,
   },
 })

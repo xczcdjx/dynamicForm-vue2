@@ -1,24 +1,9 @@
-# dynamicform-vue2
+# dynamicformdjx-vue2
 
-## Project setup
-```
-npm install
-```
+基于 **Vue2** 的动态表单输入组件。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Vue3 版本 [Document](https://xczcdjx.github.io/dynamicFormDoc/)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+React 版本 (正在适配)
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+vue2 版本 (正在适配)
