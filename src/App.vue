@@ -3,6 +3,7 @@
     <Test/>
     <Test2/>
     <TestCls/>
+    <DynamicInput/>
   </div>
 </template>
 
@@ -11,9 +12,11 @@ import { Component, Vue } from 'vue-property-decorator';
 import Test from "@/test/Test";
 import Test2 from "@/test/Test2";
 import TestCls from "@/test/TestCls";
+import DynamicInput from "@/origin/DynamicInput";
 
 @Component({
   components: {
+    DynamicInput,
     TestCls,
     Test2,
     Test
