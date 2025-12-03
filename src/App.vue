@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import DynamicInput from "../dist/index.common";
+import DynamicInput from "../dist";
 
 @Component({
   components: {

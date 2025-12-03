@@ -1,22 +1,25 @@
 {
   "name": "dynamicformdjx-vue2",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "author": "xczcdjx",
   "description": "Dynamic form components for Vue 2",
   "license": "MIT",
   "main": "dist/index.common.js",
   "unpkg": "dist/index.umd.min.js",
+  "types": "dist/types/index.d.ts",
+  "web-types": "dist/web-types.json",
   "files": [
     "dist"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build-p": "vue-cli-service build --target lib --name index --dest dist src/index.ts",
+    "build-v2": "vue-cli-service build --target lib --name index --dest dist src/index.ts",
     "build:dts": "vue-tsc -p tsconfig.json --declaration --emitDeclarationOnly --outDir dist/types && cpx src/types/dyForm.d.ts dist/types/types",
+    "build:web-types": "vue-docgen-web-types --configFile web-types.config.js",
+    "build:all": "npm run build-v2 && npm run build:dts && npm run build:web-types",
     "lint": "vue-cli-service lint",
     "pub": "npm run build && npm publish --access public"
   },
-  "types": "dist/types/index.d.ts",
   "sideEffects": [
     "*.css",
     "*.less"
@@ -28,12 +31,6 @@
     "form",
     "component-library"
   ],
-  "dependencies": {
-    "core-js": "^3.8.3"
-  },
-  "peerDependencies": {
-
-  },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
@@ -45,17 +42,19 @@
     "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-typescript": "^9.1.0",
+    "core-js": "^3.8.3",
     "cpx": "^1.5.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "less": "^4.4.2",
     "less-loader": "^12.3.0",
-    "typescript": "~4.5.5",
+    "typescript": "^5.9.3",
     "vue": "^2.6.14",
     "vue-class-component": "^7.2.3",
+    "vue-docgen-web-types": "^0.1.8",
     "vue-property-decorator": "^9.1.2",
     "vue-template-compiler": "^2.6.14",
-    "vue-tsc": "^1.8.27"
+    "vue-tsc": "^3.1.5"
   },
   "eslintConfig": {
     "root": true,
