@@ -1,9 +1,17 @@
 {
   "name": "dynamicformdjx-vue2",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "xczcdjx",
   "description": "Dynamic form components for Vue 2",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xczcdjx/dynamicForm-vue2"
+  },
+  "homepage": "https://github.com/xczcdjx/dynamicForm-vue2#readme",
+  "bugs": {
+    "url": "https://github.com/xczcdjx/dynamicForm-vue2/issues"
+  },
   "main": "dist/index.common.js",
   "unpkg": "dist/index.umd.min.js",
   "types": "dist/types/index.d.ts",
@@ -48,13 +56,13 @@
     "eslint-plugin-vue": "^8.0.3",
     "less": "^4.4.2",
     "less-loader": "^12.3.0",
-    "typescript": "^5.9.3",
+    "typescript": "~4.5.5",
     "vue": "^2.6.14",
     "vue-class-component": "^7.2.3",
     "vue-docgen-web-types": "^0.1.8",
     "vue-property-decorator": "^9.1.2",
     "vue-template-compiler": "^2.6.14",
-    "vue-tsc": "^3.1.5"
+    "vue-tsc": "^1.8.27"
   },
   "eslintConfig": {
     "root": true,

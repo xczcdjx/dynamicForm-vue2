@@ -1,20 +1,26 @@
 <template>
   <div id="app">
-    <DynamicInput/>
+    <single-data/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import DynamicInput from "../dist";
+import SingleData from "@/components/singleData.vue";
 
 @Component({
   components: {
-    DynamicInput,
+    SingleData,
     // HelloWorld,
   },
+  data(){
+    return {
+
+    }
+  }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+}
 </script>
 
 <style>

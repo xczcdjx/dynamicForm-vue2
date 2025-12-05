@@ -26,3 +26,9 @@ module.exports = {
         tsConfigPath: './tsconfig.json'
     }
 }
+/*
+"source": {
+            "module": "dynamicformdjx-vue2",
+            "symbol": "default"
+          }
+* */
