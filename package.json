@@ -22,7 +22,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build-v2": "vue-cli-service build --target lib --name index --dest dist src/index.ts",
-    "build:dts": "vue-tsc -p tsconfig.json --declaration --emitDeclarationOnly --outDir dist/types && cpx src/types/dyForm.d.ts dist/types/types",
+    "build:dts": "vue-tsc -p tsconfig.json --declaration --emitDeclarationOnly --outDir dist/types",
     "build:web-types": "vue-docgen-web-types --configFile web-types.config.js",
     "build:all": "npm run build-v2 && npm run build:dts && npm run build:web-types",
     "lint": "vue-cli-service lint",
@@ -51,7 +51,6 @@
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-typescript": "^9.1.0",
     "core-js": "^3.8.3",
-    "cpx": "^1.5.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "less": "^4.4.2",

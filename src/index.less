@@ -9,7 +9,7 @@
 
 .dynamicInput {
   overflow: hidden;
-  padding: 15px;
+  //padding: 15px;
 
   &.small {
     .dyFormList {
@@ -235,7 +235,9 @@
 
 .dynamicCascadeInput {
   .dynamicInput();
-
+  .bt{
+    font-size: 0.8em;
+  }
   .dyFormList {
 
     .dItem {
@@ -243,7 +245,7 @@
       .vInput{
         .surSlot{
           white-space: nowrap;
-
+          .centerFlex();
           > button {
             padding: 0.1em 0.4em;
             font-size: 0.8em;
@@ -287,38 +289,6 @@
     }
 
     .depth-1 {
-      /*.depth-2 {
-        border: 1px solid green;
-        border-style: dashed;
-        padding: 5px;
-        border-radius: 5px;
-        margin-top: 10px;
-        display: grid;
-        row-gap: 10px;
-        .dItem{
-          .btn{
-            .n-button{
-              transform: scale(0.9);
-            }
-          }
-        }
-        .depth-3 {
-          border: 1px solid blue;
-          border-style: dashed;
-          padding: 5px;
-          border-radius: 5px;
-          margin-top: 8px;
-          display: grid;
-          row-gap: 8px;
-          .dItem{
-            .btn{
-              .n-button{
-                transform: scale(0.8);
-              }
-            }
-          }
-        }
-      }*/
       .loop(5); // 生成 depth-1 到 depth-5
     }
     .no-border{

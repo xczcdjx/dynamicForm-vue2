@@ -1,5 +1,6 @@
-import type {ValueType, DyCFormItem, DyRandomFun} from "@/types";
+import type {ValueType, DyCFormItem, DyRandomFun, DyCasFormItem} from "@/types";
 
+const allowType = (v: any) => ['string', 'number'].includes(v)
 const tranArr = (obj: ValueType, arrayFun: DyRandomFun, splitSymbol: string) => Object.keys(obj).map((it, i) => {
     const v = obj[it]
     const isArray = Array.isArray(v)
@@ -12,6 +13,24 @@ const tranArr = (obj: ValueType, arrayFun: DyRandomFun, splitSymbol: string) => 
         isNumber: isNumber || undefined
     }
 }) as DyCFormItem[];
+const tranMulObj = (obj: ValueType, arrayFun: DyRandomFun, arraySplitSymbol: string = ','): DyCasFormItem[] => {
+    return Object.keys(obj).map((it, i) => {
+        let v = obj[it]
+        const isArray = Array.isArray(v)
+        const isNumber = isArray ? v.every((it2: string | number) => typeof it2 === 'number') : typeof v === 'number'
+        const isNull = v === null
+        if (allowType(typeof v)) v = obj[it]
+        if (isNull) v = ''
+        return {
+            // @ts-ignore
+            rId: arrayFun(i),
+            key: it,
+            value: Object.prototype.toString.call(v) === '[object Object]' ? tranMulObj(obj[it], arrayFun, arraySplitSymbol) : isArray ? v.join(arraySplitSymbol) : v,
+            isArray: isArray || undefined,
+            isNumber: isNumber || undefined
+        }
+    })
+}
 const resetObj = (arr: DyCFormItem[], splitSymbol: string) => {
     return arr.reduce((pre, cur) => {
         if (cur.key.trim()) {
@@ -20,6 +39,15 @@ const resetObj = (arr: DyCFormItem[], splitSymbol: string) => {
         return pre;
     }, {} as ValueType);
 };
+const resetMulObj = (items: DyCasFormItem[], arraySplitSymbol: string = ',') => {
+    return items.reduce((pre, cur) => {
+        const v = cur.value
+        if (cur.key.trim().length) {
+            pre[cur.key] = Array.isArray(v) ? resetMulObj(v) : parseValue(cur.value as string, cur.isArray, cur.isNumber, arraySplitSymbol);
+        }
+        return pre;
+    }, {} as ValueType)
+}
 const parseValue = (value: string, isArray?: boolean, isNumber?: boolean, splitSym: string = ',') => {
     let d: any
     if (isArray) {
@@ -33,35 +61,6 @@ const parseValue = (value: string, isArray?: boolean, isNumber?: boolean, splitS
     }
     return d
 };
-/*// 只允许数字和小数点，顺便兼容数组（用 splitSymbol 分隔）
-const formatNumberInput = (
-    val: string,
-    isArray?: boolean,
-    splitSymbol: string = ','
-) => {
-    // 处理单个数字：只保留数字和一个小数点
-    const sanitizeOne = (s: string) => {
-        // 去掉非数字和小数点
-        s = s.replace(/[^\d.]/g, '')
-        // 只保留第一个小数点
-        const firstDot = s.indexOf('.')
-        if (firstDot !== -1) {
-            s =
-                s.slice(0, firstDot + 1) +
-                s.slice(firstDot + 1).replace(/\./g, '')
-        }
-        return s
-    }
-
-    if (isArray) {
-        return val
-            .split(splitSymbol)
-            .map(item => sanitizeOne(item))
-            .join(splitSymbol)
-    } else {
-        return sanitizeOne(val)
-    }
-}*/
 // 允许数字 / 小数点 / 负号，兼容数组（用 splitSymbol 分隔）
 const formatNumberInput = (
     val: string,
@@ -149,7 +148,10 @@ const saferRepairColor = (colors: string[], i: number): string => {
 }
 export {
     tranArr,
+    tranMulObj,
     resetObj,
+    resetMulObj,
+    allowType,
     parseValue,
     formatNumberInput,
     getDepthColor,

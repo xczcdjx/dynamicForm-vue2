@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <single-data/>
+<!--    <single-data/>-->
+    <cascade-data/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import SingleData from "@/components/singleData.vue";
+import CascadeData from "@/components/cascadeData.vue";
 
 @Component({
   components: {
+    CascadeData,
     SingleData,
     // HelloWorld,
   },

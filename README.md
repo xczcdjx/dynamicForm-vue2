@@ -40,7 +40,7 @@ pnpm add dynamicformdjx-vue2
     },
     methods: {
       setData(){
-        this.$refs.dyRef?.onSet({test: "helloWorld"})
+        this.$refs.dyRef.onSet({test: "helloWorld"})
       }
     }
   }
