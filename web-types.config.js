@@ -29,6 +29,6 @@ module.exports = {
 /*
 "source": {
             "module": "dynamicformdjx-vue2",
-            "symbol": "default"
+            "symbol": "DynamicInput"
           }
 * */

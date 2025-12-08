@@ -3,11 +3,10 @@ import type {ValueType, DyRandomFun, DyBtnConfig, DyListConfig, DyCasConfig, DyC
 import {
     allowType,
     formatNumberInput,
-    parseValue,
     resetMulObj,
     saferRepairColor,
     tranMulObj
-} from "@/utils/tools";
+} from "../utils/tools";
 
 export default Vue.extend({
         name: 'DynamicCascadeInput',
@@ -47,8 +46,9 @@ export default Vue.extend({
         },
         data() {
             const ml: DyListConfig = {
+                //@ts-ignore
                 arraySplitSymbol: ',',
-                ...this.btnConfigs,
+                ...this.dyListConfigs,
             }
             return {
                 renderM: tranMulObj(this.modelValue, this.randomFun as DyRandomFun, ml.arraySplitSymbol),
@@ -97,7 +97,7 @@ export default Vue.extend({
                 showPad: true,
                 retractLen: 0,
                 borderColors: [],
-                ...this.btnConfigs,
+                ...this.configs,
             }
             const ml = this.ml
             // render Cascade form
@@ -210,7 +210,8 @@ export default Vue.extend({
                                 </div>
                                 <div class="btn">
                                     <button
-                                        class={['success', 'bt']}
+                                        class={['success', 'bt',
+                                            'n-btn']}
                                         disabled={i !== arr.length - 1}
                                         onClick={() => {
                                             // @ts-ignore
@@ -222,7 +223,8 @@ export default Vue.extend({
                                     <button
                                         class={[
                                             "danger",
-                                            'bt'
+                                            'bt',
+                                            'n-btn'
                                         ]}
                                         onClick={() => {
                                             items.splice(i, 1);

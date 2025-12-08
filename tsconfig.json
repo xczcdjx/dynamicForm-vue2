@@ -41,6 +41,7 @@
     "src/main.ts",
     "src/App.vue",
     "src/test/**",
+    "src/components/**",
     "src/demo/**"
   ]
 }

@@ -235,9 +235,6 @@
 
 .dynamicCascadeInput {
   .dynamicInput();
-  .bt{
-    font-size: 0.8em;
-  }
   .dyFormList {
 
     .dItem {
@@ -263,6 +260,15 @@
             input{
               font-weight: bold;
             }
+          }
+        }
+      }
+      .btn{
+        .n-btn{
+          font-size: 24px;
+          padding: 2px 11px;
+          &.danger{
+            padding: 2px 13.5px;
           }
         }
       }
@@ -322,6 +328,11 @@
           transform: scale((1 - (@i * 0.08)));
           /* 如果希望 Less 不计算，可以用 ~"calc(...)" 但这里不需要 */
         }
+      }
+      .n-btn {
+        /* 在 scale 里把表达式包起来（无单位运算） */
+        transform: scale((1 - (@i * 0.08)));
+        /* 如果希望 Less 不计算，可以用 ~"calc(...)" 但这里不需要 */
       }
     }
 
