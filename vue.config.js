@@ -9,6 +9,12 @@ if (process.env.NODE_ENV === 'production') {
           amd: 'vue',
     },
   }
+  externals['element-ui'] = {
+    root: 'ELEMENT',
+    commonjs: 'element-ui',
+    commonjs2: 'element-ui',
+    amd: 'element-ui',
+  }
 }
 module.exports = defineConfig({
   transpileDependencies: true,
