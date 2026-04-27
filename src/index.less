@@ -94,6 +94,10 @@
     gap: 10px;
     padding: 10px 5px;
 
+    &.noList {
+      padding: 0;
+    }
+
     .dItem {
       width: 100%;
       display: grid;
@@ -113,7 +117,8 @@
             border: 1px solid #d2d6dd;
             padding: 0.5em 0.4em;
             border-radius: 3px;
-            &:focus{
+
+            &:focus {
               outline: none;
               box-shadow: 0 0 5px rgba(0, 123, 255, 0.3)
             }
@@ -134,7 +139,8 @@
 
             &.nativeV {
               letter-spacing: 3px;
-              &:focus{
+
+              &:focus {
                 outline: none;
                 //box-shadow: 0 0 5px rgba(0, 123, 255, 0.3)
               }
@@ -173,16 +179,22 @@
     }
   }
 
-  .key,.isKey{
+  .key, .isKey {
     .el-input__inner {
       text-align: center;
     }
   }
+
   .control {
     margin-top: 5px;
     .centerFlex();
     column-gap: 10px;
-    >div{
+
+    &.noList {
+      margin-top: 0;
+    }
+
+    > div {
       .centerFlex();
       column-gap: 10px;
     }
@@ -228,27 +240,32 @@
   .danger {
     background: #ea696a;
   }
-  .aaa{
+
+  .aaa {
     color: red;
   }
 }
 
 .dynamicCascadeInput {
   .dynamicInput();
+
   .dyFormList {
 
     .dItem {
       width: inherit;
-      .vInput{
-        .surSlot{
+
+      .vInput {
+        .surSlot {
           white-space: nowrap;
           .centerFlex();
+
           > button {
             padding: 0.1em 0.4em;
             font-size: 0.8em;
           }
         }
       }
+
       .input {
         .key {
 
@@ -257,17 +274,20 @@
         .value {
           &.isKey {
             text-align: center;
-            input{
+
+            input {
               font-weight: bold;
             }
           }
         }
       }
-      .btn{
-        .n-btn{
+
+      .btn {
+        .n-btn {
           font-size: 24px;
           padding: 2px 11px;
-          &.danger{
+
+          &.danger {
             padding: 2px 13.5px;
           }
         }
@@ -280,15 +300,18 @@
       border: 1px solid var(--c1);
       border-style: dashed;
       border-radius: 5px;
-      >.dItem{
+
+      > .dItem {
         padding: 5px;
       }
-       .dItem +.dItem {
+
+      .dItem + .dItem {
         //padding: 5px;
-         margin-top: 5px;
+        margin-top: 5px;
       }
-      &.no-pad{
-        >.dItem{
+
+      &.no-pad {
+        > .dItem {
           padding: 0;
         }
       }
@@ -297,10 +320,12 @@
     .depth-1 {
       .loop(5); // 生成 depth-1 到 depth-5
     }
-    .no-border{
+
+    .no-border {
       border: none !important;
     }
-    .no-pad{
+
+    .no-pad {
       padding: 0 !important;
     }
   }
@@ -329,6 +354,7 @@
           /* 如果希望 Less 不计算，可以用 ~"calc(...)" 但这里不需要 */
         }
       }
+
       .n-btn {
         /* 在 scale 里把表达式包起来（无单位运算） */
         transform: scale((1 - (@i * 0.08)));
@@ -342,7 +368,20 @@
 }
 
 
+.dynamicForm {
+  .cls-required {
+    margin-left: 5px;
+    color: red;
+  }
 
+  .header {
+    margin-bottom: 5px;
+  }
+
+  .footer {
+    margin-top: 5px;
+  }
+}
 
 @media (max-width: 756px) {
   .dynamicInput {

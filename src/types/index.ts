@@ -1,3 +1,5 @@
+import {VNode} from "vue";
+
 export type DyCFormItem = {
     rId: string;
     key: string;
@@ -26,16 +28,47 @@ export type DyConfig = {
     // ...
 }
 export type DyCasConfig = {
-    showBorder?:boolean
-    retractLen?:number
-    borderColors?:string[]
-    showPad?:boolean
+    showBorder?: boolean
+    retractLen?: number
+    borderColors?: string[]
+    showPad?: boolean
 } & Omit<DyConfig, 'autoScroll'>
 export type DyListConfig = {
     // 分隔符
     arraySplitSymbol: string
     // ...
 }
+export type ScopeType = {
+    row: {
+        rId: string
+        key: string
+        value: string
+        isArray?: boolean | undefined
+        isNumber?: boolean | undefined
+    }
+    index: number
+    isLast: boolean
+    addItem: () => void
+    removeItem: () => void
+    toggleArray: () => boolean
+    toggleNumber: () => boolean
+}
+export type CasScopeType = ScopeType & { addChild: () => void }
+
+export interface DynamicInputSlots {
+    newBtn?: ({newItem}: { newItem: () => void }) => VNode[]
+    resetBtn?: ({reset}: { reset: () => void }) => VNode[]
+    mergeBtn?: ({merge}: { merge: () => void }) => VNode[]
+    typeTools?: (row: ScopeType) => VNode[]
+    rowActions?: (row: ScopeType) => VNode[]
+}
+
+export interface DynamicCasInputSlots extends Omit<DynamicInputSlots, 'rowActions' | 'typeTools'> {
+    typeTools?: (row: CasScopeType) => VNode[]
+    rowActions?: (row: CasScopeType) => VNode[]
+    newChild?: (row: CasScopeType) => VNode[]
+}
+
 export type ValueType = Record<string, any>
 // 内部新建键值对id
 export type DyRandomFun = (id?: number | string) => string
