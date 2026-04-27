@@ -106,7 +106,7 @@ export default Vue.extend({
             deep: true
         }
     },
-    render(): VNode {
+    render(h): VNode {
         const mb: DyBtnConfig = {
             resetTxt: "重置",
             newTxt: "添加项",

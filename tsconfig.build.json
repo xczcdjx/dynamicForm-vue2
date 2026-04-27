@@ -1,0 +1,29 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ESNext",
+    "sourceMap": false,
+    "declaration": true,
+    "declarationDir": "dist",
+    "emitDeclarationOnly": false,
+    "noEmit": false,
+    "allowJs": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests/**",
+    "src/main.ts",
+    "src/App.vue",
+    "src/test/**",
+    "src/demo/**",
+    "src/components/**"
+  ]
+}
