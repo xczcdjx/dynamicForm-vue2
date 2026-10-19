@@ -4,6 +4,7 @@ import DynamicInput from "./origin/DynamicInput";
 import DynamicCascadeInput from "./origin/DynamicCascadeInput";
 import './index.less'
 export {DynamicInput,DynamicCascadeInput}
+export * from './utils/tools'
 // 可选：支持 Vue.use() 全局注册
 const DynamicInputPlugin: PluginObject<any> = {
     install(v: typeof Vue) {
