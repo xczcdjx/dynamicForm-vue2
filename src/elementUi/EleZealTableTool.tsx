@@ -191,7 +191,9 @@ export const EleZealTableBtnControl = Vue.extend({
             h(DropdownItem, { key: item.key, props: { command: item.key, disabled: item.disabled } }, [item.title || ''])
         ))
         const trigger = this.$slots.text || h(Button, { props: { size } }, [this.dropDownText])
-        return h('div', { class: 'zealTableBtnControl' }, [
+        return h('div', { class: 'zealTableBtnControl',style:{
+            justifyContent: 'center',
+            } }, [
             h(Dropdown, {
                 props: { size, trigger: 'click', placement: 'bottom', ...this.dropDownProps },
                 on: { command: this.onSelect }

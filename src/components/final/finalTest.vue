@@ -46,7 +46,7 @@ export default {
           ...(!mobile ? {fixed: 'right'} : {})
         },*/
         {
-          label: "Actions", fixed: 'right', width: isMobile.value ? 100 : 180, render2: row => h(
+          label: "Actions", fixed: 'right', width: isMobile.value ? 90 : 180, render2: row => h(
               EleZealTableBtnControl, {
                 props: {
                   isMobile: isMobile.value,
@@ -221,8 +221,8 @@ export default {
                       @selection-change="onSelectionChange">
           <!--          <template  slot="mobile-title" slot-scope="cell">-->
           <template #mobile-title="cell">
-            <div class="mobile-song-title" :title="cell.row.title">{{ cell.row.title }}</div>
-            <small class="mobile-song-length">{{ cell.row.length }}</small>
+            <el-tag :title="cell.row.title">{{ cell.row.title }}</el-tag>
+<!--            <small class="mobile-song-length">{{ cell.row.length }}</small>-->
           </template>
 <!--          <template #row-actions="cell">
             <EleZealTableBtnControl :is-mobile="isMobile" drop-down-text="···"
