@@ -1,45 +1,18 @@
 <template>
   <div id="app">
-    <!--    <single-data/>-->
-    <!--    <cascade-data/>-->
-    <ele-dynamic-form/>
+<final-test/>
   </div>
 </template>
 
-<script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
-import SingleData from "@/components/singleData.vue";
-import CascadeData from "@/components/cascadeData.vue";
-import EleDynamicForm from "@/elementUi/EleDynamicForm";
+<script>
+import FinalTest from "@/components/finalTest.vue";
 
-@Component({
-  components: {
-    EleDynamicForm,
-    CascadeData,
-    SingleData,
-    // HelloWorld,
-  },
-  data() {
-    return {}
-  }
-})
-export default class App extends Vue {
+export default {
+  components: {FinalTest}
+
 }
 </script>
 
-<style>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+<style lang="less" scoped>
 
-/*#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}*/
 </style>

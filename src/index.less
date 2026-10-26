@@ -400,3 +400,60 @@
     }
   }
 }
+
+
+.dynamicInput {
+  .dyFormList {
+    overflow: auto;
+    .dItem .input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      .key { flex: 0 0 150px; width: 150px; }
+      .value { flex: 1; min-width: 0; }
+      .typeTools { display: flex; align-items: center; gap: 3px; }
+      .typeTools .el-button { padding: 4px 5px; font-size: 11px; }
+      .el-input--prefix .el-input__inner { padding-left: 110px; }
+    }
+  }
+}
+.popup-modal-footer { display: flex; justify-content: flex-end; gap: 8px; }
+.zealCard {
+  width: 100%;
+  .zealCardInner { width: 100%; height: 100%; }
+  .title { text-align: center; font-weight: bold; font-size: 18px; }
+  .search { margin: 10px 0; }
+  .searchBtn { display: flex; justify-content: flex-end; gap: 8px; }
+  .controlBtn { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; }
+  .footer { display: flex; justify-content: center; padding-top: 16px; border-top: 1px solid #ebeef5; }
+}
+.eleZealTableSearch, .eleZealSearchDrawer {
+  .searchForm {
+    overflow: auto;
+    .el-row { display: flex; flex-wrap: wrap; margin: 0 !important; }
+    .el-col { min-width: 0; padding: 0 12px !important; }
+    .el-col:first-child { padding-left: 0 !important; }
+    .el-col:last-child { padding-right: 0 !important; }
+    .el-form-item { display: flex; align-items: center; margin-bottom: 0; }
+    .el-form-item__label { float: none; flex: 0 0 auto; line-height: 40px; }
+    .el-form-item__content { flex: 1; min-width: 0; margin-left: 0 !important; }
+    .el-input-number { width: 100%; }
+  }
+  .naiTitle { margin-bottom: 10px; font-weight: 500; font-size: 18px; }
+  .drawerSearchBtn { display: flex; align-items: center; justify-content: space-between; }
+  .searchBtn { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+}
+.eleZealTableSearch .searchForm { margin-top: 12px; overflow: visible; }
+.eleZealSearchDrawer .searchForm { overflow: auto; }
+.eleZealTableSearch .searchBtn { margin-top: 18px; }
+.eleZealTable { width: 100%; }
+.eleZealTablePaginationControl { display: flex; justify-content: center; }
+.zealTableBtnControl { display: flex; justify-content: flex-start; gap: 5px; }
+@media (max-width: 756px) {
+  .dynamicInput .dyFormList .dItem .input .key { flex-basis: 60px; width: 60px; }
+  .zealCard .controlBtn { gap: 8px; flex-wrap: wrap; }
+  .eleZealSearchDrawer .searchForm .el-col { width: 100%; padding: 0 !important; }
+  .eleZealTablePaginationControl { justify-content: flex-start; }
+  .eleZealTable .cell { padding: 0 4px; }
+  .zealTableBtnControl .el-button { padding: 7px 10px; }
+}

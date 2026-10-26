@@ -25,6 +25,8 @@ export type DyConfig = {
     autoScroll?: boolean;
     // 允许输入过滤  (默认true)
     allowFilter?: boolean;
+    hideArrayBtn?: boolean;
+    hideNumberBtn?: boolean;
     // ...
 }
 export type DyCasConfig = {
@@ -76,3 +78,6 @@ export type ExposeType = {
     onSet?: (obj?: object) => void
     getResult?: (t: 'res' | 'ori') => DyCFormItem[] | object
 }
+
+export type { PageModal, ZealPagination, ZealColumn, TableBtnType, ZealColumnType } from './form'
+export type { SizeObjType, ZealCardSlots, ZealTableSearchSlots } from './slots'
