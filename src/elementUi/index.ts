@@ -7,7 +7,6 @@ import {
     EleZealTableSearch, EleZealTablePaginationControl, EleZealTable, EleZealTableBtnControl
 } from './EleZealTableTool'
 import '../index.less'
-import './index.less'
 
 export {
     EleDynamicForm, EleDynamicInput, ElePopupModal, EleZealCard,

@@ -20,7 +20,11 @@ export const EleZealTableSearch = Vue.extend({
         mobileDrawer: { type: Boolean, default: true },
         closeDrawerAuto: { type: Boolean, default: false },
         copyDefault: { type: Boolean, default: false },
-        isMobile: { type: Boolean, default: false }
+        isMobile: { type: Boolean, default: false },
+        formSize:{
+            type: String as PropType<"" | "medium" | "small" | "mini">,
+            default: 'default'
+        }
     },
     data() { return { drawShow: false, copyData: {} as Record<string, any> } },
     mounted() { if (this.copyDefault) this.copyData = useDyForm(this.searchItems).getValues() },
@@ -55,7 +59,7 @@ export const EleZealTableSearch = Vue.extend({
             class: 'searchForm', style: { maxHeight: inDrawer ? undefined : this.searchFormMaxHeight }
         }, [h(EleDynamicForm, {
             props: { items: this.searchItems, preset: inDrawer ? 'fullRow' : 'grid',
-                formConfig: { labelPosition: 'left', showMessage: false, size: inDrawer ? 'small' : undefined } }
+                formConfig: { labelPosition: 'left', showMessage: false, size: inDrawer ? 'small' : this.formSize } }
         })])
         const desktop = !this.mobileDrawer || !this.isMobile
         const content = desktop ? [title, searchForm(false), this.actionButtons(h)] : [
@@ -71,7 +75,12 @@ export const EleZealTableSearch = Vue.extend({
                 title: this.drawerTitle || this.title },
             on: { 'update:visible': (value: boolean) => { this.drawShow = value } }
         }, [searchForm(true), this.actionButtons(h)])
-        return h('div', { class: 'eleZealTableSearch' }, [...content, drawer])
+        // Drawer moves its root to body. Keep a stable sibling so Vue never
+        // inserts desktop fields relative to that detached root when resizing.
+        return h('div', { class: 'eleZealTableSearch' }, [
+            h('div', { key: 'search-content', class: 'searchContent' }, content),
+            drawer
+        ])
     }
 })
 

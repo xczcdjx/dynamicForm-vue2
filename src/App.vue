@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import FinalTest from "@/components/finalTest.vue";
+import FinalTest from "@/components/final/finalTest.vue";
 
 export default {
   components: {FinalTest}
@@ -13,6 +13,13 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+body {
+  margin: 0;
+}
 
+#app {
+  box-sizing: border-box;
+  padding: 20px;
+}
 </style>

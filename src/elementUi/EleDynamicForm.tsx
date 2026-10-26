@@ -88,6 +88,7 @@ export default Vue.extend({
             const formItem = h(FormItem, {
                 key: item.key,
                 props: { label: item.label, prop: item.path || item.key }
+                // @ts-ignore
             }, [this.renderControl(h, item)])
             return this.preset === 'grid'
                 ? h(Col, { key: item.key, props: { span: item.span ?? 24, offset: item.offset ?? 0 } }, [formItem])

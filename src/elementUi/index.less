@@ -2,53 +2,116 @@
   .dyFormList {
     overflow: auto;
     .dItem .input {
+      min-width: 0;
       display: flex;
       align-items: center;
       gap: 8px;
-      .key { flex: 0 0 150px; width: 150px; }
-      .value { flex: 1; min-width: 0; }
+      .key { flex: 1 1 0; min-width: 0; width: 0; }
+      .value {
+        display: flex;
+        align-items: center;
+        flex: 3 1 0;
+        min-width: 0;
+        width: 0;
+
+        .el-input__inner { flex: 1; min-width: 0; width: 0; }
+        .el-input__prefix { position: static; order: -1; flex: 0 0 auto; }
+      }
       .typeTools { display: flex; align-items: center; gap: 3px; }
       .typeTools .el-button { padding: 4px 5px; font-size: 11px; }
-      .el-input--prefix .el-input__inner { padding-left: 110px; }
+      .el-input--prefix .el-input__inner { padding-left: 1em; }
     }
   }
 }
 .popup-modal-footer { display: flex; justify-content: flex-end; gap: 8px; }
 .zealCard {
   width: 100%;
-  .zealCardInner { width: 100%; height: 100%; }
+  .zealCardInner {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+
+    > .el-card__header { padding: 20px; }
+  }
   .title { text-align: center; font-weight: bold; font-size: 18px; }
   .search { margin: 10px 0; }
   .searchBtn { display: flex; justify-content: flex-end; gap: 8px; }
   .controlBtn { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; }
   .footer { display: flex; justify-content: center; padding-top: 16px; border-top: 1px solid #ebeef5; }
 }
+.dynamicForm {
+  .cls-required {
+    margin-left: 5px;
+    color: red;
+  }
+  .el-row{
+    gap: 5px 0;
+  }
+
+  .header {
+    margin-bottom: 5px;
+  }
+
+  .footer {
+    margin-top: 5px;
+  }
+}
 .eleZealTableSearch, .eleZealSearchDrawer {
   .searchForm {
-    overflow: auto;
-    .el-row { display: flex; flex-wrap: wrap; margin: 0 !important; }
-    .el-col { min-width: 0; padding: 0 12px !important; }
-    .el-col:first-child { padding-left: 0 !important; }
-    .el-col:last-child { padding-right: 0 !important; }
-    .el-form-item { display: flex; align-items: center; margin-bottom: 0; }
-    .el-form-item__label { float: none; flex: 0 0 auto; line-height: 40px; }
-    .el-form-item__content { flex: 1; min-width: 0; margin-left: 0 !important; }
-    .el-input-number { width: 100%; }
+    overflow-y: auto;
+    overflow-x: hidden;
+    .el-row { display: flex; flex-wrap: wrap; }
+    .el-col { min-width: 0; }
+    .el-form-item { display: flex; align-items: center; margin-bottom: 5px; }
+    .el-form-item__label { float: none; flex: 0 0 auto; }
+    .el-form-item__content { flex: 1; min-width: 0; margin-left: 0; }
+    .el-select, .el-cascader, .el-date-editor { width: 100%; min-width: 0; }
+    .el-input-number { max-width: 100%; }
   }
-  .naiTitle { margin-bottom: 10px; font-weight: 500; font-size: 18px; }
+  .naiTitle { margin-bottom: 10px; font-weight: bold; font-size: 18px; }
   .drawerSearchBtn { display: flex; align-items: center; justify-content: space-between; }
-  .searchBtn { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+  .searchBtn { display: flex; justify-content: flex-end; gap: 12px; margin-top: 10px; }
 }
-.eleZealTableSearch .searchForm { margin-top: 12px; overflow: visible; }
-.eleZealSearchDrawer .searchForm { overflow: auto; }
-.eleZealTableSearch .searchBtn { margin-top: 18px; }
+.eleZealTableSearch, .eleZealSearchDrawer {
+  .searchBtn > .el-button + .el-button { margin-left: 0; }
+}
+.eleZealSearchDrawer {
+  .el-drawer__header {
+    margin-bottom: 15px;
+    padding: 20px 20px 0;
+  }
+
+  .el-drawer__body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 5px 15px 20px;
+    overflow: hidden;
+  }
+
+  .searchForm {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+
+    .el-form-item { margin-bottom: 10px; }
+  }
+
+  .searchBtn {
+    flex-shrink: 0;
+    margin: 0 5px;
+    padding-top: 10px;
+  }
+}
 .eleZealTable { width: 100%; }
 .eleZealTablePaginationControl { display: flex; justify-content: center; }
 .zealTableBtnControl { display: flex; justify-content: flex-start; gap: 5px; }
 @media (max-width: 756px) {
-  .dynamicInput .dyFormList .dItem .input .key { flex-basis: 60px; width: 60px; }
-  .zealCard .controlBtn { gap: 8px; flex-wrap: wrap; }
-  .eleZealSearchDrawer .searchForm .el-col { width: 100%; padding: 0 !important; }
+  .zealCard {
+    .zealCardInner > .el-card__header,
+    .zealCardInner > .el-card__body { padding: 10px; }
+    .controlBtn { gap: 8px; flex-wrap: wrap; }
+  }
   .eleZealTablePaginationControl { justify-content: flex-start; }
   .eleZealTable .cell { padding: 0 4px; }
   .zealTableBtnControl .el-button { padding: 7px 10px; }
