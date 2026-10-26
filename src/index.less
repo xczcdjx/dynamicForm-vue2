@@ -387,3 +387,38 @@
 }
 
 @import "./elementUi/index.less";
+
+.loadedScroll {
+  height: 100%;
+
+  .hintText {
+    margin-top: 10px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: loadedScrollHintEnter 220ms ease-out;
+
+    &.errorTxt {
+      color: red;
+      cursor: pointer;
+    }
+  }
+}
+
+@keyframes loadedScrollHintEnter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadedScroll .hintText {
+    animation: none;
+  }
+}

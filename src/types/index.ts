@@ -81,3 +81,5 @@ export type ExposeType = {
 
 export type { PageModal, ZealPagination, ZealColumn, TableBtnType, ZealColumnType } from './form'
 export type { SizeObjType, ZealCardSlots, ZealTableSearchSlots } from './slots'
+
+export type {LoadedScrollProps, LoadedScrollSlots, LoadedScrollListeners} from "./loadedScroll"

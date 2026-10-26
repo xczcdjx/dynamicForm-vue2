@@ -1,8 +1,9 @@
-import Vue, { PropType, VNode } from 'vue'
+import { defineComponent, PropType, VNode } from 'vue'
 import { Button, Card } from 'element-ui'
 import type { SizeObjType } from '../types/slots'
+import {useWindowSize, useObserverSize} from '../hooks/useTool'
 
-export default Vue.extend({
+export default defineComponent({
     name: 'EleZealCard',
     props: {
         title: String,
@@ -12,64 +13,15 @@ export default Vue.extend({
         checkWindowSize: { type: Array as PropType<number[]>, default: () => [756, 500] },
         observeDelay: { type: Number, default: 100 }
     },
-    data() {
-        return {
-            tableHeight: 0,
-            windowWidth: typeof window === 'undefined' ? 0 : window.innerWidth,
-            windowHeight: typeof window === 'undefined' ? 0 : window.innerHeight,
-            observer: null as ResizeObserver | null,
-            resizeTimer: null as ReturnType<typeof setTimeout> | null
-        }
-    },
-    computed: {
-        isMobile(): boolean { return this.windowWidth <= (this.checkWindowSize[0] || 756) }
-    },
-    mounted() {
-        window.addEventListener('resize', this.onResize)
-        this.$nextTick(() => {
-            this.observeSize()
-            this.measure()
-        })
-    },
-    updated() { this.scheduleMeasure() },
-    beforeDestroy() {
-        window.removeEventListener('resize', this.onResize)
-        this.observer?.disconnect()
-        if (this.resizeTimer) clearTimeout(this.resizeTimer)
+    setup(props) {
+        const {width, height, isMobile} = useWindowSize(
+            () => props.checkWindowSize[0] ?? 756,
+            () => props.checkWindowSize[1] ?? 500
+        )
+        const observer = useObserverSize(() => props.observeDelay)
+        return {...observer, windowWidth: width, windowHeight: height, isMobile}
     },
     methods: {
-        onResize() {
-            this.windowWidth = window.innerWidth
-            this.windowHeight = window.innerHeight
-            this.scheduleMeasure()
-        },
-        scheduleMeasure() {
-            if (this.resizeTimer) clearTimeout(this.resizeTimer)
-            this.resizeTimer = setTimeout(this.measure, this.observeDelay)
-        },
-        observeSize() {
-            if (typeof ResizeObserver === 'undefined') return
-            this.observer = new ResizeObserver(this.scheduleMeasure)
-            const wrap = this.$refs.wrap as HTMLElement | undefined
-            const card = (this.$refs.card as Vue | undefined)?.$el as HTMLElement | undefined
-            const rest = this.$refs.rest as HTMLElement | undefined
-            const header = card?.querySelector('.el-card__header')
-            const body = card?.querySelector('.el-card__body')
-            ;[wrap, card, rest, header, body].forEach(el => { if (el) this.observer?.observe(el) })
-        },
-        measure() {
-            const wrap = this.$refs.wrap as HTMLElement | undefined
-            const card = (this.$refs.card as Vue | undefined)?.$el as HTMLElement | undefined
-            const rest = this.$refs.rest as HTMLElement | undefined
-            const footer = this.$refs.footer as HTMLElement | undefined
-            if (!wrap || !card) return
-            const header = card.querySelector('.el-card__header') as HTMLElement | null
-            const body = card.querySelector('.el-card__body') as HTMLElement | null
-            const style = body ? getComputedStyle(body) : null
-            const pad = style ? parseFloat(style.paddingTop || '0') + parseFloat(style.paddingBottom || '0') : 0
-            const next = Math.max(0, wrap.clientHeight - (rest?.offsetHeight || 0) - (header?.offsetHeight || 0) - (footer?.offsetHeight || 0) - pad)
-            if (next !== this.tableHeight) this.tableHeight = next
-        },
         slot(name: string, scope: object): VNode[] | undefined {
             return this.$scopedSlots[name]?.(scope) || this.$slots[name]
         }
@@ -94,13 +46,13 @@ export default Vue.extend({
             ])
         ])
         const footer = this.slot('footer', size)
-        return h('div', { ref: 'wrap', class: 'zealCard', style: { height: `calc(${this.zealHeight} - ${this.outPadding * 2}px)` } }, [
-            h(Card, { ref: 'card', class: 'zealCardInner' }, [
+        return h('div', { ref: 'wrapRef', class: 'zealCard', style: { height: `calc(${this.zealHeight} - ${this.outPadding * 2}px)` } }, [
+            h(Card, { ref: 'cardRef', class: 'zealCardInner' }, [
                 header,
                 this.slot('default', { ...size, tableHeight: this.tableHeight }),
-                footer && h('div', { ref: 'footer', class: 'footer' }, footer)
+                footer && h('div', { ref: 'footerRef', class: 'footer' }, footer)
             ]),
-            h('div', { ref: 'rest' }, this.slot('rest', size))
+            h('div', { ref: 'restRef' }, this.slot('rest', size))
         ])
     }
 })

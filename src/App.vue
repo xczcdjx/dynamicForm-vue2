@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-<final-test/>
+<!--<final-test/>-->
+    <table-scroll/>
   </div>
 </template>
 
 <script>
 import FinalTest from "@/components/final/finalTest.vue";
+import TableScroll from "@/components/tableScroll.vue";
 
 export default {
-  components: {FinalTest}
+  components: {TableScroll, FinalTest}
 
 }
 </script>
