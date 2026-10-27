@@ -9,6 +9,6 @@ fs.writeFileSync(
 
 fs.writeFileSync(
     'elementUi.d.ts',
-    `export * from './dist/elementUi/index'\n`,
+    `export { default } from './dist/elementUi/index'\nexport * from './dist/elementUi/index'\n`,
     'utf-8'
 )

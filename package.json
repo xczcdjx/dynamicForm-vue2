@@ -1,6 +1,6 @@
 {
   "name": "dynamicformdjx-vue2",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "author": "xczcdjx",
   "description": "Dynamic form components for Vue 2",
   "license": "MIT",
@@ -17,11 +17,13 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.cjs",
       "default": "./dist/index.cjs"
     },
     "./elementUi": {
       "types": "./dist/elementUi/index.d.ts",
+      "import": "./dist/elementUi/index.mjs",
       "require": "./dist/elementUi/index.cjs",
       "default": "./dist/elementUi/index.cjs"
     },
@@ -34,13 +36,13 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build-v2": "vue-cli-service build --target lib --name index --dest dist src/index.ts",
-    "build:elementUi": "vue-cli-service build --target lib --name index --dest dist/elementUi src/elementUi/index.ts",
-    "build:dts": "vue-tsc -p tsconfig.json --declaration --emitDeclarationOnly --outDir dist/types",
+    "build-v2": "npm run build",
+    "build:elementUi": "rollup -c rollup.config.mjs --environment BUILD_TARGET:elementUi && npm run gen:compat-entry",
+    "build:dts": "vue-tsc -p tsconfig.build.json --declaration --emitDeclarationOnly --outDir dist",
     "build:web-types": "vue-docgen-web-types --configFile web-types.config.js",
     "fix:web-types": "node fix-web-types.mjs",
     "gen:compat-entry": "node gen-compat-entry.mjs",
-    "build:all": "npm run build-v2 && npm run build:dts && npm run build:web-types",
+    "build:all": "npm run build",
     "lint": "vue-cli-service lint",
     "pub": "npm run build && npm publish --access public",
     "clean": "rimraf dist",
@@ -85,11 +87,11 @@
     "rollup-plugin-typescript2": "^0.37.0",
     "rollup-plugin-vue": "^5.1.9",
     "typescript": "~4.5.5",
-    "vue": "^2.6.14",
+    "vue": "2.7.16",
     "vue-class-component": "^7.2.3",
     "vue-docgen-web-types": "^0.1.8",
     "vue-property-decorator": "^9.1.2",
-    "vue-template-compiler": "^2.6.14",
+    "vue-template-compiler": "2.7.16",
     "vue-tsc": "^1.8.27"
   },
   "eslintConfig": {
@@ -113,5 +115,15 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.29.2"
+  },
+  "module": "dist/index.mjs",
+  "peerDependencies": {
+    "vue": "^2.7.0",
+    "element-ui": "^2.15.14"
+  },
+  "peerDependenciesMeta": {
+    "element-ui": {
+      "optional": true
+    }
   }
 }

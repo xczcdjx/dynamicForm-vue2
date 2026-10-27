@@ -1,16 +1,18 @@
 <template>
   <div id="app">
 <!--<final-test/>-->
-    <table-scroll/>
+<!--    <table-scroll/>-->
+    <cascade-data/>
   </div>
 </template>
 
 <script>
 import FinalTest from "@/components/final/finalTest.vue";
 import TableScroll from "@/components/tableScroll.vue";
+import CascadeData from "@/components/cascadeData.vue";
 
 export default {
-  components: {TableScroll, FinalTest}
+  components: {CascadeData, TableScroll, FinalTest}
 
 }
 </script>

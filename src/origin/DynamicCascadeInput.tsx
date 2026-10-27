@@ -1,4 +1,4 @@
-import Vue, {PropType, toRaw, VNode} from "vue";
+import Vue, {PropType, toRaw, VNode, CreateElement} from "vue";
 import type {ValueType, DyRandomFun, DyBtnConfig, DyListConfig, DyCasConfig, DyCasFormItem} from "../types";
 import {
     allowType,
@@ -81,7 +81,7 @@ export default Vue.extend({
                 deep: true
             }
         },
-        render(): VNode {
+        render(h: CreateElement): VNode {
             // config
             const mb: DyBtnConfig = {
                 resetTxt: "重置",

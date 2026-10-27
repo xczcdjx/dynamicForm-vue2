@@ -6,7 +6,6 @@ import EleZealCard from './EleZealCard'
 import {
     EleZealTableSearch, EleZealTablePaginationControl, EleZealTable, EleZealTableBtnControl
 } from './EleZealTableTool'
-import '../index.less'
 
 export {
     EleDynamicForm, EleDynamicInput, ElePopupModal, EleZealCard,
@@ -28,7 +27,7 @@ export type elePopupModalRef = InstanceType<typeof ElePopupModal>
 export type eleZealCardRef = InstanceType<typeof EleZealCard>
 export type eleZealTableSearchRef = InstanceType<typeof EleZealTableSearch>
 
-const DynamicFormPlugin: PluginObject<any> = {
+const EleDynamicFormPlugin: PluginObject<any> = {
     install(v: typeof Vue) {
         v.component('EleDynamicForm', EleDynamicForm)
         v.component('EleDynamicInput', EleDynamicInput)
@@ -41,4 +40,4 @@ const DynamicFormPlugin: PluginObject<any> = {
     }
 }
 
-export default DynamicFormPlugin
+export default EleDynamicFormPlugin

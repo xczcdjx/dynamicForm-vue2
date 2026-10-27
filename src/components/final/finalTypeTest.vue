@@ -13,7 +13,7 @@ import {
   usePagination,
   useZealColumnTool
 } from '@/elementUi'
-import type { elePopupModalRef, eleDynamicFormRef, TableBtnType } from '@/elementUi'
+import type { elePopupModalRef, eleDynamicFormRef, TableBtnType, DyFormItem, ZealPagination } from '@/elementUi'
 
 interface SongRow {
   no: number
@@ -21,7 +21,26 @@ interface SongRow {
   length: string
 }
 
-type SearchValues = Omit<SongRow, 'no'> & { no: number | '' | null | undefined }
+// 搜索/编辑过程中允许空值，提交后的数据仍为 SongRow。
+type SearchValues = { no: number | '' | null | undefined; title: string | null; length: string | null }
+type EditValues = Omit<SongRow, 'no'> & { no: number | null }
+
+interface ExampleState {
+  sourceRows: SongRow[]
+  tableData: SongRow[]
+  selectedNos: number[]
+  editingNo: number | null
+  loading: boolean
+  searchItems: DyFormItem<SearchValues>[]
+  editItems: DyFormItem<EditValues>[]
+  pagination: ZealPagination
+}
+
+// validator 当前返回普通对象；通过守卫校验后再作为业务行使用。
+function isSongRow(values: Record<string, unknown>): values is SongRow & Record<string, unknown> {
+  return typeof values.no === 'number' && Number.isFinite(values.no) &&
+      typeof values.title === 'string' && typeof values.length === 'string'
+}
 
 type RowActions = {
   editItem(row: SongRow): void
@@ -69,30 +88,35 @@ export default defineComponent({
     ], { align: 'center' })
     return { tableColumns, eleZealCardRef }
   },
-  data () {
+  data (): ExampleState {
     return {
       sourceRows: seedRows.map(row => ({ ...row })),
-      tableData: [] as SongRow[],
-      selectedNos: [] as number[],
-      editingNo: null as number | null,
+      tableData: [],
+      selectedNos: [],
+      editingNo: null,
       loading: false,
       searchItems: useDecorateForm<SearchValues>([
         { key: 'no', label: 'No', value: undefined, renderType: 'renderInputNumber',
           renderProps: { placeholder: 'Please Input' }, span: 8 },
         { key: 'title', label: 'Title', value: '', renderProps: { placeholder: 'Please Input' }, span: 8 },
         { key: 'length', label: 'Length', value: '', renderProps: { placeholder: 'Please Input' }, span: 8 },
-        ...Array(30).fill({
-          key: "length",
-          label: "Length",
-          span:8
-        })
+
       ]),
-      editItems: useDecorateForm<SongRow>([
+      editItems: useDecorateForm<EditValues>([
         { key: 'no', label: 'No', value: null, required: true, renderType: 'renderInputNumber' },
         { key: 'title', label: 'Title', value: '', required: true },
         { key: 'length', label: 'Length', value: '', required: true }
       ]),
       pagination: usePagination()
+    }
+  },
+  computed: {
+    // Vue2 的 $refs 本身不推导业务组件类型，在边界集中声明。
+    modalRef(): elePopupModalRef | undefined {
+      return this.$refs.modal as elePopupModalRef | undefined
+    },
+    editFormRef(): eleDynamicFormRef | undefined {
+      return this.$refs.editForm as eleDynamicFormRef | undefined
     }
   },
   created () {
@@ -104,7 +128,7 @@ export default defineComponent({
   methods: {
     async fetchData (): Promise<void> {
       this.loading = true
-      const values = useDyForm(this.searchItems).getValues()
+      const values: Partial<SearchValues> = useDyForm<SearchValues>(this.searchItems).getValues()
       const rows = this.sourceRows.filter(row =>
           (values.no === null || values.no === '' || values.no === undefined || row.no === Number(values.no)) &&
           (!values.title || row.title.toLowerCase().includes(String(values.title).toLowerCase())) &&
@@ -122,41 +146,48 @@ export default defineComponent({
       this.selectedNos = []
       this.$nextTick(() => { this.loading = false })
     },
-    search () {
+    search (values: Partial<SearchValues>): void {
+      // 搜索事件的字段、setValues 的字段和值均有类型约束。
+      useDyForm<SearchValues>(this.searchItems).setValues(values)
       this.pagination.pageNo = 1
       this.fetchData()
     },
-    resetSearch () {
-      useDyForm(this.searchItems).setValue('no', undefined)
+    resetSearch (): void {
+      useDyForm<SearchValues>(this.searchItems).setValue('no', undefined)
       this.pagination.pageNo = 1
       this.fetchData()
     },
-    addItem () {
+    addItem (): void {
       this.editingNo = null
-      useDyForm(this.editItems).setValues({
+      useDyForm<EditValues>(this.editItems).setValues({
         no: Math.max(0, ...this.sourceRows.map(row => Number(row.no))) + 1,
         title: '', length: ''
       })
-      ;(this.$refs.modal as elePopupModalRef).toggle(true)
+      this.modalRef?.toggle(true)
     },
     editItem (row: SongRow): void {
       this.editingNo = row.no
-      useDyForm(this.editItems).setValues(row)
-      ;(this.$refs.modal as elePopupModalRef).toggle(true)
+      useDyForm<EditValues>(this.editItems).setValues(row)
+      this.modalRef?.toggle(true)
     },
     async saveItem (): Promise<boolean> {
       let values: Record<string, unknown>
       try {
-        values = await (this.$refs.editForm as eleDynamicFormRef).validator()
+        if (!this.editFormRef) return false
+        values = await this.editFormRef.validator()
       } catch (error) {
         return false
       }
-      const no = Number(values.no)
+      if (!isSongRow(values)) {
+        this.$message.error('请填写有效的编号、标题和时长')
+        return false
+      }
+      const no = values.no
       if (this.sourceRows.some(row => row.no === no && row.no !== this.editingNo)) {
         this.$message.error('No 已存在')
         return false
       }
-      const row = { no, title: String(values.title), length: String(values.length) }
+      const row: SongRow = { no, title: values.title, length: values.length }
       if (this.editingNo === null) this.sourceRows.unshift(row)
       else {
         const index = this.sourceRows.findIndex(item => item.no === this.editingNo)
@@ -172,7 +203,7 @@ export default defineComponent({
       this.fetchData()
       this.$message.success('Delete successful')
     },
-    deleteSelected () {
+    deleteSelected (): void {
       this.sourceRows = this.sourceRows.filter(row => !this.selectedNos.includes(row.no))
       this.fetchData()
       this.$message.success('Delete selected successful')

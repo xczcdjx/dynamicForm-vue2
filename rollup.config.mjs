@@ -6,17 +6,20 @@ import babel from '@rollup/plugin-babel'
 import postcss from 'rollup-plugin-postcss'
 import { terser } from 'rollup-plugin-terser'
 
+// Keep the named entry when building only Element UI, so its files stay in dist/elementUi.
+const input = process.env.BUILD_TARGET === 'elementUi'
+    ? { elementUi: 'src/elementUi/index.ts' }
+    : { index: 'src/index.ts', elementUi: 'src/elementUi/index.ts' }
+
 const external = [
     'vue',
     'element-ui',
+    /^element-ui\//,
     /@babel\/runtime/
 ]
 
 export default {
-    input: {
-        index: 'src/index.ts',
-        elementUi: 'src/elementUi/index.ts'
-    },
+    input,
 
     external,
 

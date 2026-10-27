@@ -6,6 +6,21 @@ Vue3 版本 [Document](https://xczcdjx.github.io/dynamicFormDoc/)
 
 React 版本 [Document](https://www.npmjs.com/package/dynamicformdjx-react)
 
+## Vue 版本要求
+
+- 最低支持 Vue **2.7.0**，包中声明 `peerDependencies.vue: "^2.7.0"`。
+- 开发与示例固定使用 **2.7.16**，vue-template-compiler 也固定为 **2.7.16**；使用模板编译器时必须与 Vue 版本一致。
+- 主入口使用 toRaw，公共 Hooks 和 Element UI 组件使用 Vue 2.7 内置 Composition API，因此 Vue 2.6 及以下不能直接使用当前构建。
+- 仅使用主入口不要求安装 Element UI；使用 /elementUi 时安装 element-ui@^2.15.14（可选 peer dependency）。
+
+```bash
+npm install vue@2.7.16 dynamicformdjx-vue2
+# 使用 Element UI 组件时再安装
+npm install element-ui@^2.15.14
+# 需要编译 Vue2 单文件组件的项目
+npm install -D vue-template-compiler@2.7.16
+```
+
 ## 安装
 
 ```bash
@@ -224,3 +239,38 @@ export default {
 ```
 
 `ElePopupModal` 实例提供 `toggle(true | false)`；`onSubmit`、`onCancel` 返回 `false` 时保持弹窗打开。`EleZealTable` 的列支持 `render2(row, index)` 或 `slot`，例如列设置 `slot: 'cell-title'` 后可通过同名作用域插槽读取 `row`。`EleZealCard` 的默认插槽可读取 `tableHeight`、`isMobile`、`width`、`height`。同时导出 `useZealColumnTool`、`useWindowSize`、`useObserverSize` 和 `usePagination`，供组合式组件使用。
+
+
+## 构建产物
+
+`npm run build`、`npm run build-v2` 和 `npm run build:all` 使用同一套 Rollup 多入口构建，先清空 dist，再生成主入口和 Element UI 子入口：
+
+```text
+dist/
+├── index.mjs
+├── index.cjs
+├── index.d.ts
+├── index.css
+├── elementUi/
+│   ├── index.mjs
+│   ├── index.cjs
+│   ├── index.d.ts
+│   ├── EleDynamicForm.d.ts
+│   ├── formTypes.d.ts
+│   └── hooks/
+├── chunks/              # 两个入口共享的运行时代码
+├── hooks/
+├── origin/
+├── types/
+└── utils/
+```
+
+`npm run build:elementUi` 可单独构建 Element UI 入口，输出到 `dist/elementUi/`，不清空其他入口。共享代码和样式仍由 Rollup 输出到 dist 中；发布前请执行完整构建。`npm run build:dts` 仅生成类型声明，目录与 JS 入口保持一致。
+
+```js
+import { DynamicInput } from 'dynamicformdjx-vue2'
+import { EleDynamicForm } from 'dynamicformdjx-vue2/elementUi'
+import 'dynamicformdjx-vue2/style.css'
+```
+
+Vue 和 Element UI 作为外部依赖保留，由使用方安装，不会打进组件库产物。现有 Webpack 项目仍可使用包根目录的 elementUi.js 兼容入口。
